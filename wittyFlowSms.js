@@ -1,6 +1,6 @@
 const axios =  require('axios')
 
-export class WFSms {
+export default class WFSms {
 
 	constructor(appId, appSecret){
 		this._appId = appId;
