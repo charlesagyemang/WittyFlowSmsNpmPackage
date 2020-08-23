@@ -20,7 +20,7 @@ class WFClient {
 			const host = 'https://api.wittyflow.com/v1/messages/send';
 			const bodyToSend = {
 	      from,
-	      to: `233${req.body.phoneNumber.substring(1)}`,
+	      to: `233${to.substring(1)}`,
 	      type: '1',
 	      message,
 	      app_id: this._appId,
@@ -41,7 +41,7 @@ class WFClient {
 			const host = 'https://api.wittyflow.com/v1/messages/send';
 			const bodyToSend = {
 				from,
-				to: `233${req.body.phoneNumber.substring(1)}`,
+				to: `233${to.substring(1)}`,
 				type: '0',
 				message,
 				app_id: this._appId,
