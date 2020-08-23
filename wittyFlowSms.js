@@ -1,6 +1,6 @@
 const axios =  require('axios')
 
-class WTSms {
+export class WFSms {
 
 	constructor(appId, appSecret){
 		this._appId = appId;
@@ -34,7 +34,7 @@ class WTSms {
 	sendFlashMessage(from, to, message){
 
 		const host = 'https://api.wittyflow.com/v1/messages/send';
-		
+
 		const bodyToSend = {
       from,
       to,
@@ -46,5 +46,5 @@ class WTSms {
 
     return axios.post(host, bodyToSend)
 	}
-	
+
 }
