@@ -6,11 +6,18 @@
   "scripts": {
     "test": "tes"
   },
+  "repository": {
+   "type": "git",
+   "url": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage.git"
+  },
   "keywords": [
     "WittyFlow"
   ],
   "author": "Charles Opoku-Agyemang",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage/issues"
+  },
   "dependencies": {
     "axios": "^0.20.0"
   }
