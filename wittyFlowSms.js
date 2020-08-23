@@ -16,19 +16,27 @@ class WFSms {
 	}
 
 	sendSms(from, to, message){
+		return new Promise(async (resolve, reject) => {
 
-		const host = 'https://api.wittyflow.com/v1/messages/send';
+			const host = 'https://api.wittyflow.com/v1/messages/send';
 
-		const bodyToSend = {
-      from,
-      to,
-      type: '1',
-      message,
-      app_id: this._appId,
-      app_secret: this._appSecret,
-    };
+			const bodyToSend = {
+	      from,
+	      to,
+	      type: '1',
+	      message,
+	      app_id: this._appId,
+	      app_secret: this._appSecret,
+	    };
 
-    return axios.post(host, bodyToSend)
+	    await axios.post(host, bodyToSend)
+			.then((response) => {
+				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
+			})
+		})
 	}
 
 	sendFlashMessage(from, to, message){
