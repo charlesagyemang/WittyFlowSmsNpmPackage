@@ -1,6 +1,6 @@
 const axios =  require('axios')
 
-class WFSms {
+class WFClient {
 
 	constructor(appId, appSecret){
 		this._appId = appId;
@@ -17,18 +17,15 @@ class WFSms {
 
 	sendSms(from, to, message){
 		return new Promise(async (resolve, reject) => {
-
 			const host = 'https://api.wittyflow.com/v1/messages/send';
-
 			const bodyToSend = {
 	      from,
-	      to,
+	      to: `233${req.body.phoneNumber.substring(1)}`,
 	      type: '1',
 	      message,
 	      app_id: this._appId,
 	      app_secret: this._appSecret,
 	    };
-
 	    await axios.post(host, bodyToSend)
 			.then((response) => {
 				resolve(response.data)
@@ -40,21 +37,52 @@ class WFSms {
 	}
 
 	sendFlashMessage(from, to, message){
+		return new Promise(async (resolve, reject) => {
+			const host = 'https://api.wittyflow.com/v1/messages/send';
+			const bodyToSend = {
+				from,
+				to: `233${req.body.phoneNumber.substring(1)}`,
+				type: '0',
+				message,
+				app_id: this._appId,
+				app_secret: this._appSecret,
+			};
+			await axios.post(host, bodyToSend)
+			.then((response) => {
+				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
+			})
+		})
+	}
 
-		const host = 'https://api.wittyflow.com/v1/messages/send';
+	getAccountBalance () {
+		return new Promise(async (resolve, reject) => {
+			const host = `https://api.wittyflow.com/v1/account/balance?app_id=${this._appId}&app_secret=${this._appSecret}`
+			await axios.get(host)
+			.then((response) => {
+				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
+			})
+		})
+	}
 
-		const bodyToSend = {
-      from,
-      to,
-      type: '0',
-      message,
-      app_id: this._appId,
-      app_secret: this._appSecret,
-    };
-
-    return axios.post(host, bodyToSend)
+	getSmsStatus (smsId) {
+		return new Promise(async (resolve, reject) => {
+			const host = `https://api.wittyflow.com/v1/messages/${smsId}/retrieve?app_id=${this._appId}&app_secret=${this._appSecret}`
+			await axios.get(host)
+			.then((response) => {
+				resolve(response.data)
+			})
+			.catch((error) => {
+				reject(error.response.data)
+			})
+		})
 	}
 
 }
 
-module.exports = { WFSms }
+module.exports = { WFClient }
