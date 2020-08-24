@@ -32,7 +32,7 @@ class WFClient {
 				const response = await axios.post(host, bodyToSend);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -54,7 +54,7 @@ class WFClient {
 				const response = await axios.post(host, bodyToSend);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -68,7 +68,7 @@ class WFClient {
 				const response = await axios.get(host);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -82,7 +82,7 @@ class WFClient {
 				const response = await axios.get(host);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}

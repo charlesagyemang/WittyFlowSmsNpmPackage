@@ -32,7 +32,7 @@ class WFClient {
 				const response = await axios.post(host, bodyToSend);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -54,7 +54,7 @@ class WFClient {
 				const response = await axios.post(host, bodyToSend);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -68,7 +68,7 @@ class WFClient {
 				const response = await axios.get(host);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
@@ -77,12 +77,12 @@ class WFClient {
 		return new Promise(async (resolve, reject) => {
 			const host = `https://api.wittyflow.com/v1/messages/${smsId}/retrieve?app_id=${this._appId}&app_secret=${this._appSecret}`
 
-			// getting status
+			// getting balance
 			try {
 				const response = await axios.get(host);
 				resolve(response.data);
 			} catch (error) {
-				reject(error.response.data);
+				reject(error);
 			}
 		})
 	}
