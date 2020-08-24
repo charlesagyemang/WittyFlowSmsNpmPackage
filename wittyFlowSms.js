@@ -77,7 +77,7 @@ class WFClient {
 		return new Promise(async (resolve, reject) => {
 			const host = `https://api.wittyflow.com/v1/messages/${smsId}/retrieve?app_id=${this._appId}&app_secret=${this._appSecret}`
 
-			// getting status
+			// getting status //
 			try {
 				const response = await axios.get(host);
 				resolve(response.data);
