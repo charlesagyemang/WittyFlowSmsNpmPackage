@@ -166,8 +166,13 @@ class WFClient {
 	 */
 	_isValidGhanaPhoneNumber(phoneNumber) {
 		// Ghana phone number should start with 0 and be 10 digits total
-		// Valid formats: 024XXXXXXX, 025XXXXXXX, 026XXXXXXX, 027XXXXXXX, 028XXXXXXX, 050XXXXXXX, etc.
-		const ghanaPhoneRegex = /^0[2-5][0-9]{8}$/;
+		// Valid formats by carrier:
+		// Vodafone: 020XXXXXXX, 050XXXXXXX
+		// Globacom: 023XXXXXXX
+		// MTN: 024XXXXXXX, 025XXXXXXX, 053XXXXXXX, 054XXXXXXX, 055XXXXXXX, 059XXXXXXX
+		// AirtelTigo: 026XXXXXXX, 027XXXXXXX, 056XXXXXXX, 057XXXXXXX
+		// Expresso: 028XXXXXXX
+		const ghanaPhoneRegex = /^0(20|23|24|25|26|27|28|50|53|54|55|56|57|59)[0-9]{7}$/;
 		return ghanaPhoneRegex.test(phoneNumber);
 	}
 
