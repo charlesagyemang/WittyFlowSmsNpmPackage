@@ -185,18 +185,54 @@ class WFClient {
 	/**
 	 * Handle API errors consistently
 	 * @private
+	 * @param {any} error - Error object to handle
+	 * @returns {Error} Standardized error object
 	 */
 	_handleError(error) {
-		if (error.response) {
-			// API responded with error status
-			return new Error(`API Error: ${error.response.status} - ${JSON.stringify(error.response.data)}`);
-		} else if (error.request) {
-			// Request was made but no response received
-			return new Error('Network Error: No response from API');
-		} else {
-			// Something else happened
-			return new Error(`Request Error: ${error.message}`);
+		// Validate error parameter and handle non-Error objects
+		if (!error) {
+			return new Error('Unknown error occurred');
 		}
+		
+		if (typeof error === 'string') {
+			return new Error(error);
+		}
+		
+		if (!(error instanceof Error) && typeof error === 'object') {
+			// Handle axios error objects that might not be Error instances
+			if (error.response) {
+				// API responded with error status
+				const status = error.response.status || 'unknown';
+				const data = error.response.data || 'No details available';
+				return new Error(`API Error: ${status} - ${JSON.stringify(data)}`);
+			} else if (error.request) {
+				// Request was made but no response received
+				return new Error('Network Error: No response from API');
+			} else {
+				// Some other object with message property
+				const message = error.message || 'Unknown error occurred';
+				return new Error(`Error: ${message}`);
+			}
+		}
+		
+		if (error instanceof Error) {
+			// Handle actual Error instances
+			if (error.response) {
+				// Axios error with response
+				const status = error.response.status || 'unknown';
+				const data = error.response.data || 'No details available';
+				return new Error(`API Error: ${status} - ${JSON.stringify(data)}`);
+			} else if (error.request) {
+				// Axios error with request but no response
+				return new Error('Network Error: No response from API');
+			} else {
+				// Regular Error object
+				return new Error(`Request Error: ${error.message}`);
+			}
+		}
+		
+		// Fallback for any other type
+		return new Error('Unknown error occurred');
 	}
 }
 
