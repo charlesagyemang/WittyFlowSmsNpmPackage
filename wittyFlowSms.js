@@ -195,7 +195,7 @@ class WFClient {
 	 */
 	_handleError(error) {
 		// Validate error parameter and handle non-Error objects
-		if (error == null) {
+		if (error === null || error === undefined) {
 			return new Error('Unknown error occurred');
 		}
 		
