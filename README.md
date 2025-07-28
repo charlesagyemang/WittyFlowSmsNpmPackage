@@ -2,21 +2,27 @@
 
 [![npm version](https://badge.fury.io/js/witty-flow-sms.svg)](https://badge.fury.io/js/witty-flow-sms)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-A modern Node.js SDK for the Witty Flow SMS API. Send SMS messages, flash messages, check delivery status, and manage your account balance with ease.
+A modern Node.js SDK for the Witty Flow SMS API with **full TypeScript support**. Send SMS messages, flash messages, check delivery status, and manage your account balance with complete type safety and IntelliSense.
 
 ## Features
 
+### Core Functionality
 - 📱 Send regular SMS messages
 - ⚡ Send flash SMS messages  
 - 📊 Check message delivery status
 - 💰 Get account balance
 - 🔒 Built-in error handling
-- 📝 Full TypeScript support with type definitions
-- ✅ Modern async/await API
 - 🛡️ Input validation
-- 🎯 TypeScript autocomplete and IntelliSense
-- 📦 Works with both JavaScript and TypeScript projects
+
+### Developer Experience
+- 🎯 **Full TypeScript support** with complete type definitions
+- 💡 **IntelliSense & autocomplete** in VS Code and other editors
+- 🔍 **Compile-time type checking** - catch errors before runtime
+- 📝 **Type-safe API responses** - know exactly what properties are available
+- ✅ **Modern async/await API**
+- 📦 **Dual support** - works perfectly with both JavaScript and TypeScript
 
 ## Installation
 
@@ -29,6 +35,8 @@ npm install witty-flow-sms
 ```bash
 yarn add witty-flow-sms
 ```
+
+> **TypeScript users:** No additional `@types` package needed! Type definitions are included out of the box.
 
 ## Quick Start
 
@@ -54,7 +62,7 @@ sendMessage();
 
 ### TypeScript
 ```typescript
-import { WFClient } from 'witty-flow-sms';
+import { WFClient, WittyFlowResponse, MessageData } from 'witty-flow-sms';
 
 // Initialize with type safety
 const smsClient: WFClient = new WFClient('your_app_id', 'your_app_secret');
@@ -62,11 +70,18 @@ const smsClient: WFClient = new WFClient('your_app_id', 'your_app_secret');
 // Send a message with full typing
 async function sendMessage(): Promise<void> {
   try {
-    const result = await smsClient.sendSms('MyApp', '0244123456', 'Hello TypeScript!');
+    // TypeScript knows the exact return type
+    const result: WittyFlowResponse<MessageData> = await smsClient.sendSms(
+      'MyApp', 
+      '0244123456', 
+      'Hello TypeScript!'
+    );
     
-    // TypeScript provides autocomplete for response properties
+    // Full autocomplete and type checking
     console.log(`Message sent: ${result.data.message_id}`);
     console.log(`Cost: ${result.data.cost}`);
+    console.log(`Status: ${result.data.status}`);
+    console.log(`Segments: ${result.data.message_segments}`);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error:', error.message);
@@ -76,6 +91,12 @@ async function sendMessage(): Promise<void> {
 
 sendMessage();
 ```
+
+**Key TypeScript Benefits:**
+- ✅ **Autocomplete** - Your editor suggests available properties
+- ✅ **Type Safety** - Catch typos and errors at compile time  
+- ✅ **IntelliSense** - See method signatures and documentation
+- ✅ **Refactoring** - Rename variables safely across your project
 
 ## Running the Demo
 
@@ -102,12 +123,38 @@ npx ts-node example.ts
 
 **Note:** Remember to replace `'your_app_id'` and `'your_app_secret'` in the example files with your actual Witty Flow credentials before running the demos.
 
+## 🚀 Quick TypeScript Setup
+
+1. **Install the package** (types included automatically):
+   ```bash
+   npm install witty-flow-sms
+   ```
+
+2. **Import with full typing**:
+   ```typescript
+   import { WFClient, WittyFlowResponse, MessageData } from 'witty-flow-sms';
+   ```
+
+3. **Get instant IntelliSense**:
+   ```typescript
+   const client = new WFClient('app_id', 'secret');
+   // Your editor now provides autocomplete and type checking!
+   ```
+
 ## API Reference
+
+> 💡 **TypeScript Users:** All methods below include full type definitions. Your editor will provide autocomplete, parameter hints, and return type information automatically.
 
 ### Constructor
 
+**JavaScript:**
 ```javascript
 const client = new WFClient(appId, appSecret);
+```
+
+**TypeScript:**
+```typescript
+const client: WFClient = new WFClient(appId, appSecret);
 ```
 
 **Parameters:**
@@ -129,10 +176,25 @@ Send a regular SMS message.
 
 **Returns:** Promise<Object> - API response with message details
 
-**Example:**
+**JavaScript Example:**
 ```javascript
 const response = await smsClient.sendSms('MyCompany', '0244123456', 'Your order is ready!');
 console.log(response);
+```
+
+**TypeScript Example:**
+```typescript
+import { WittyFlowResponse, MessageData } from 'witty-flow-sms';
+
+const response: WittyFlowResponse<MessageData> = await smsClient.sendSms(
+  'MyCompany', 
+  '0244123456', 
+  'Your order is ready!'
+);
+
+// Full type safety and autocomplete
+console.log(`Message ID: ${response.data.message_id}`);
+console.log(`Cost: ${response.data.cost}`);
 ```
 
 **Success Response:**
@@ -309,44 +371,180 @@ The SDK automatically converts `0244123456` to `233244123456` for the API.
 - **Message Content:** Maximum 180 characters
 - **Flash Messages:** Same limits as regular SMS
 
-## TypeScript Support
+## 🎯 TypeScript Developer Guide
 
-This package includes comprehensive TypeScript definitions and examples:
+This package is built with **first-class TypeScript support**. No additional setup required!
 
-### Type Definitions
-- ✅ Full type definitions for all methods and responses
-- ✅ IntelliSense support in VS Code and other TypeScript-aware editors
-- ✅ Compile-time type checking
-- ✅ Generic interfaces for API responses
+### 📦 What's Included
+- ✅ **Complete type definitions** for all classes, methods, and responses
+- ✅ **Generic interfaces** for type-safe API responses
+- ✅ **IntelliSense support** in VS Code, WebStorm, and other editors
+- ✅ **Compile-time error checking** to catch issues before runtime
+- ✅ **Zero additional dependencies** - types included in the main package
 
-### Available Types
+### 🔧 Available Types & Interfaces
+
 ```typescript
 import { 
-  WFClient,           // Main client class
-  WittyFlowResponse,  // Generic response interface
-  MessageData,        // SMS message response data
-  MessageStatusData,  // Message status response data
-  BalanceData        // Account balance response data
+  // Main Classes
+  WFClient,                    // SMS client class
+  
+  // Response Types
+  WittyFlowResponse<T>,       // Generic API response wrapper
+  
+  // Data Interfaces  
+  MessageData,                // SMS send response data
+  MessageStatusData,          // Message status response data
+  BalanceData,               // Account balance data
 } from 'witty-flow-sms';
 ```
 
-### Example with Types
+### 💡 TypeScript Usage Examples
+
+#### Basic Setup with Types
+```typescript
+import { WFClient } from 'witty-flow-sms';
+
+// Type-safe client initialization
+const client: WFClient = new WFClient('your_app_id', 'your_app_secret');
+```
+
+#### Sending SMS with Full Type Safety
 ```typescript
 import { WFClient, WittyFlowResponse, MessageData } from 'witty-flow-sms';
 
-const client = new WFClient('app_id', 'app_secret');
-
-// TypeScript knows the exact return type
-const response: WittyFlowResponse<MessageData> = await client.sendSms(
-  'Sender', 
-  '0244123456', 
-  'Hello TypeScript!'
-);
-
-// Full autocomplete available
-console.log(response.data.message_id);
-console.log(response.data.cost);
+async function sendTypedSMS(): Promise<string> {
+  const client = new WFClient('app_id', 'secret');
+  
+  // TypeScript knows the exact return type
+  const response: WittyFlowResponse<MessageData> = await client.sendSms(
+    'MyApp',
+    '0244123456', 
+    'Hello from TypeScript!'
+  );
+  
+  // Autocomplete works for all properties
+  return response.data.message_id; // Type: string
+}
 ```
+
+#### Advanced: Type-Safe Error Handling
+```typescript
+import { WFClient, MessageData, BalanceData } from 'witty-flow-sms';
+
+class SMSService {
+  private client: WFClient;
+  
+  constructor(appId: string, appSecret: string) {
+    this.client = new WFClient(appId, appSecret);
+  }
+  
+  async sendWithBalanceCheck(
+    from: string, 
+    to: string, 
+    message: string
+  ): Promise<{ sent: boolean; messageId?: string; balance: string }> {
+    try {
+      // Check balance first - TypeScript knows the return type
+      const balanceResponse = await this.client.getAccountBalance();
+      const balance: string = balanceResponse.data.balance;
+      
+      if (parseFloat(balance) < 0.05) {
+        return { sent: false, balance };
+      }
+      
+      // Send message - TypeScript provides full autocomplete
+      const smsResponse = await this.client.sendSms(from, to, message);
+      
+      return {
+        sent: true,
+        messageId: smsResponse.data.message_id,
+        balance: balance
+      };
+      
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(`SMS service error: ${error.message}`);
+      }
+      throw error;
+    }
+  }
+}
+```
+
+#### Interface Definitions Reference
+```typescript
+// All response data follows this structure
+interface WittyFlowResponse<T> {
+  status: 'success';
+  code: number;
+  message: string;
+  data: T;
+}
+
+// SMS send response data
+interface MessageData {
+  status: string;
+  message_id: string;
+  message: string;
+  date_created: string;
+  direction: string;
+  from: string;
+  to: string;
+  type: string;
+  message_segments: number;
+  cost: string;
+  service_rate: string;
+  callback_url: string | null;
+}
+
+// Message status response data  
+interface MessageStatusData {
+  message_id: string;
+  status: string;
+  message: string;
+  date: string;
+  readable_date: string;
+  direction: string;
+  type: string;
+  sender: string;
+  recipient: string;
+  message_segments: number;
+  cost: string;
+  rate: string;
+  billing: string;
+}
+
+// Account balance response data
+interface BalanceData {
+  balance: string;
+  currency: string;
+}
+```
+
+### 🛠️ TypeScript Configuration Tips
+
+Add to your `tsconfig.json` for optimal experience:
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  }
+}
+```
+
+### 📝 IntelliSense Features You Get
+
+- **Method signatures** with parameter hints
+- **Return type information** 
+- **Property autocomplete** on response objects
+- **Import suggestions** when typing
+- **Error squiggles** for type mismatches
+- **Go to definition** for interfaces
+- **Hover documentation** for all methods
 
 ## Requirements
 

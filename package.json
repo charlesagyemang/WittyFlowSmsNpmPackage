@@ -23,6 +23,8 @@
     "api",
     "wrapper",
     "nodejs",
+    "typescript",
+    "types",
     "ghana"
   ],
   "author": "Charles Opoku-Agyemang & Kingsley Ofosu",
