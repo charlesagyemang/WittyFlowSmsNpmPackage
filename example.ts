@@ -5,7 +5,7 @@
  * It shows proper typing and interfaces for all methods.
  */
 
-import { WFClient } from './index';
+import { WFClient } from './wittyFlowSms';
 
 // Initialize the SMS client with proper typing
 const smsClient: WFClient = new WFClient('your_app_id', 'your_app_secret');
