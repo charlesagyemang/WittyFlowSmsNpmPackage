@@ -2,7 +2,7 @@
   "name": "witty-flow-sms",
   "version": "1.1.1",
   "description": "Witty Flow SMS API Wrapper For Node.js",
-  "main": "wittyFlowSms.js",
+  "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -37,6 +37,7 @@
     "node": ">=12.0.0"
   },
   "files": [
+    "index.js",
     "wittyFlowSms.js",
     "index.d.ts",
     "README.md",
