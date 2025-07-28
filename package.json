@@ -5,7 +5,8 @@
   "main": "wittyFlowSms.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node wittyFlowSms.js"
+    "start": "node wittyFlowSms.js",
+    "demo": "node example.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
   },
   "files": [
     "wittyFlowSms.js",
-    "README.md"
+    "README.md",
+    "example.js"
   ],
   "dependencies": {
     "axios": "^1.6.0"
