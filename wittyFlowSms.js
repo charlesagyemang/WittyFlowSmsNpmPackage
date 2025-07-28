@@ -27,10 +27,13 @@ class WFClient {
 	 */
 	async sendSms(from, to, message) {
 		try {
+			// Validate input parameters
+			this._validateSmsInputs(from, to, message);
+			
 			const url = `${this._baseUrl}/messages/send`;
 			const data = {
 				from,
-				to: `233${to.substring(1)}`,
+				to: this._formatPhoneNumber(to),
 				type: '1',
 				message,
 				app_id: this._appId,
@@ -53,10 +56,13 @@ class WFClient {
 	 */
 	async sendFlashMessage(from, to, message) {
 		try {
+			// Validate input parameters
+			this._validateSmsInputs(from, to, message);
+			
 			const url = `${this._baseUrl}/messages/send`;
 			const data = {
 				from,
-				to: `233${to.substring(1)}`,
+				to: this._formatPhoneNumber(to),
 				type: '0',
 				message,
 				app_id: this._appId,
@@ -96,6 +102,15 @@ class WFClient {
 	 */
 	async getSmsStatus(smsId) {
 		try {
+			// Validate message ID
+			if (!smsId || typeof smsId !== 'string') {
+				throw new Error('Message ID (smsId) is required and must be a string');
+			}
+			
+			if (smsId.trim().length === 0) {
+				throw new Error('Message ID (smsId) cannot be empty');
+			}
+			
 			const url = `${this._baseUrl}/messages/${smsId}/retrieve`;
 			const params = {
 				app_id: this._appId,
@@ -107,6 +122,64 @@ class WFClient {
 		} catch (error) {
 			throw this._handleError(error);
 		}
+	}
+
+	/**
+	 * Validate SMS input parameters
+	 * @private
+	 * @param {string} from - Sender ID
+	 * @param {string} to - Recipient phone number
+	 * @param {string} message - Message content
+	 */
+	_validateSmsInputs(from, to, message) {
+		if (!from || typeof from !== 'string') {
+			throw new Error('Sender ID (from) is required and must be a string');
+		}
+		
+		if (from.length > 14) {
+			throw new Error('Sender ID (from) must not exceed 14 characters');
+		}
+		
+		if (!to || typeof to !== 'string') {
+			throw new Error('Recipient phone number (to) is required and must be a string');
+		}
+		
+		if (!message || typeof message !== 'string') {
+			throw new Error('Message content is required and must be a string');
+		}
+		
+		if (message.length > 180) {
+			throw new Error('Message content must not exceed 180 characters');
+		}
+		
+		// Validate Ghana phone number format
+		if (!this._isValidGhanaPhoneNumber(to)) {
+			throw new Error('Invalid phone number format. Expected Ghana format: 0XXXXXXXXX (e.g., 0244123456)');
+		}
+	}
+
+	/**
+	 * Validate Ghana phone number format
+	 * @private
+	 * @param {string} phoneNumber - Phone number to validate
+	 * @returns {boolean} True if valid Ghana phone number format
+	 */
+	_isValidGhanaPhoneNumber(phoneNumber) {
+		// Ghana phone number should start with 0 and be 10 digits total
+		// Valid formats: 024XXXXXXX, 025XXXXXXX, 026XXXXXXX, 027XXXXXXX, 028XXXXXXX, 050XXXXXXX, etc.
+		const ghanaPhoneRegex = /^0[2-5][0-9]{8}$/;
+		return ghanaPhoneRegex.test(phoneNumber);
+	}
+
+	/**
+	 * Format phone number for API (convert from 0XXXXXXXXX to 233XXXXXXXXX)
+	 * @private
+	 * @param {string} phoneNumber - Ghana phone number starting with 0
+	 * @returns {string} Formatted phone number for API
+	 */
+	_formatPhoneNumber(phoneNumber) {
+		// Remove leading 0 and prepend 233 (Ghana country code)
+		return `233${phoneNumber.substring(1)}`;
 	}
 
 	/**

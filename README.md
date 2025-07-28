@@ -22,6 +22,7 @@ A modern Node.js SDK for the Witty Flow SMS API with **full TypeScript support**
 - 🔍 **Compile-time type checking** - catch errors before runtime
 - 📝 **Type-safe API responses** - know exactly what properties are available
 - ✅ **Modern async/await API**
+- 🛡️ **Comprehensive input validation** - prevents runtime errors
 - 📦 **Dual support** - works perfectly with both JavaScript and TypeScript
 
 ## Installation
@@ -360,10 +361,16 @@ try {
 ## Phone Number Format
 
 **Important:** Phone numbers must be in Ghana format starting with `0`:
-- ✅ Correct: `0244123456`, `0501234567`, `0201234567`
-- ❌ Incorrect: `+233244123456`, `233244123456`, `244123456`
+- ✅ Correct: `0244123456`, `0501234567`, `0201234567`, `0262345678`
+- ❌ Incorrect: `+233244123456`, `233244123456`, `244123456`, `0123456789`
 
-The SDK automatically converts `0244123456` to `233244123456` for the API.
+**Validation Rules:**
+- Must start with `0`
+- Must be exactly 10 digits
+- Second digit must be 2, 3, 4, or 5 (valid Ghana network codes)
+- Examples: `024XXXXXXX`, `025XXXXXXX`, `026XXXXXXX`, `027XXXXXXX`, `050XXXXXXX`
+
+The SDK automatically converts `0244123456` to `233244123456` for the API and validates the format before sending.
 
 ## Message Limits
 
