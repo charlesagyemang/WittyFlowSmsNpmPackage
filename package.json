@@ -3,10 +3,12 @@
   "version": "1.1.1",
   "description": "Witty Flow SMS API Wrapper For Node.js",
   "main": "wittyFlowSms.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node wittyFlowSms.js",
-    "demo": "node example.js"
+    "demo": "node example.js",
+    "demo:ts": "npx ts-node example.ts"
   },
   "repository": {
     "type": "git",
@@ -34,12 +36,18 @@
   },
   "files": [
     "wittyFlowSms.js",
+    "index.d.ts",
     "README.md",
-    "example.js"
+    "example.js",
+    "example.ts"
   ],
   "dependencies": {
     "axios": "^1.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  },
   "peerDependencies": {}
 }

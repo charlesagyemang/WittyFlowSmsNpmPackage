@@ -73,3 +73,11 @@ Thumbs.db
 # Logs
 logs
 *.log
+
+# TypeScript
+*.tsbuildinfo
+dist/
+build/
+
+# TypeScript declaration maps
+*.d.ts.map

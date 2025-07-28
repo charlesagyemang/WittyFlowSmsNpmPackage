@@ -12,9 +12,11 @@ A modern Node.js SDK for the Witty Flow SMS API. Send SMS messages, flash messag
 - 📊 Check message delivery status
 - 💰 Get account balance
 - 🔒 Built-in error handling
-- 📝 Full TypeScript-style documentation
+- 📝 Full TypeScript support with type definitions
 - ✅ Modern async/await API
 - 🛡️ Input validation
+- 🎯 TypeScript autocomplete and IntelliSense
+- 📦 Works with both JavaScript and TypeScript projects
 
 ## Installation
 
@@ -30,6 +32,7 @@ yarn add witty-flow-sms
 
 ## Quick Start
 
+### JavaScript
 ```javascript
 const { WFClient } = require('witty-flow-sms');
 
@@ -49,19 +52,55 @@ async function sendMessage() {
 sendMessage();
 ```
 
+### TypeScript
+```typescript
+import { WFClient } from 'witty-flow-sms';
+
+// Initialize with type safety
+const smsClient: WFClient = new WFClient('your_app_id', 'your_app_secret');
+
+// Send a message with full typing
+async function sendMessage(): Promise<void> {
+  try {
+    const result = await smsClient.sendSms('MyApp', '0244123456', 'Hello TypeScript!');
+    
+    // TypeScript provides autocomplete for response properties
+    console.log(`Message sent: ${result.data.message_id}`);
+    console.log(`Cost: ${result.data.cost}`);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error:', error.message);
+    }
+  }
+}
+
+sendMessage();
+```
+
 ## Running the Demo
 
-The package includes a comprehensive example file that demonstrates all features:
+The package includes comprehensive example files that demonstrate all features:
 
+### JavaScript Demo
 ```bash
-# Run the interactive demo
+# Run the JavaScript demo
 npm run demo
 
 # Or run directly
 node example.js
 ```
 
-**Note:** Remember to replace `'your_app_id'` and `'your_app_secret'` in `example.js` with your actual Witty Flow credentials before running the demo.
+### TypeScript Demo
+```bash
+# Run the TypeScript demo (requires TypeScript)
+npm run demo:ts
+
+# Or install TypeScript and run directly
+npm install -g typescript ts-node
+npx ts-node example.ts
+```
+
+**Note:** Remember to replace `'your_app_id'` and `'your_app_secret'` in the example files with your actual Witty Flow credentials before running the demos.
 
 ## API Reference
 
@@ -270,10 +309,50 @@ The SDK automatically converts `0244123456` to `233244123456` for the API.
 - **Message Content:** Maximum 180 characters
 - **Flash Messages:** Same limits as regular SMS
 
+## TypeScript Support
+
+This package includes comprehensive TypeScript definitions and examples:
+
+### Type Definitions
+- ✅ Full type definitions for all methods and responses
+- ✅ IntelliSense support in VS Code and other TypeScript-aware editors
+- ✅ Compile-time type checking
+- ✅ Generic interfaces for API responses
+
+### Available Types
+```typescript
+import { 
+  WFClient,           // Main client class
+  WittyFlowResponse,  // Generic response interface
+  MessageData,        // SMS message response data
+  MessageStatusData,  // Message status response data
+  BalanceData        // Account balance response data
+} from 'witty-flow-sms';
+```
+
+### Example with Types
+```typescript
+import { WFClient, WittyFlowResponse, MessageData } from 'witty-flow-sms';
+
+const client = new WFClient('app_id', 'app_secret');
+
+// TypeScript knows the exact return type
+const response: WittyFlowResponse<MessageData> = await client.sendSms(
+  'Sender', 
+  '0244123456', 
+  'Hello TypeScript!'
+);
+
+// Full autocomplete available
+console.log(response.data.message_id);
+console.log(response.data.cost);
+```
+
 ## Requirements
 
 - Node.js >= 12.0.0
 - Valid Witty Flow API credentials
+- TypeScript >= 4.0 (for TypeScript usage)
 
 ## Contributing
 
