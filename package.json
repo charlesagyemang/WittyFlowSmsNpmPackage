@@ -1,27 +1,43 @@
 {
   "name": "witty-flow-sms",
   "version": "1.1.1",
-  "description": "Witty Flow Sms Api Wrapper For Node Js",
+  "description": "Witty Flow SMS API Wrapper For Node.js",
   "main": "wittyFlowSms.js",
   "scripts": {
-    "test": "tes"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node wittyFlowSms.js"
   },
   "repository": {
-   "type": "git",
-   "url": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage.git"
+    "type": "git",
+    "url": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage.git"
   },
   "keywords": [
     "WittyFlow",
     "WittyFlowSms",
     "witty-flow-sms",
-    "witty-flow"
+    "witty-flow",
+    "sms",
+    "api",
+    "wrapper",
+    "nodejs",
+    "ghana"
   ],
   "author": "Charles Opoku-Agyemang & Kingsley Ofosu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage/issues"
   },
+  "homepage": "https://github.com/charlesagyemang/WittyFlowSmsNpmPackage#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "wittyFlowSms.js",
+    "README.md"
+  ],
   "dependencies": {
-    "axios": "^0.20.0"
-  }
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {}
 }
